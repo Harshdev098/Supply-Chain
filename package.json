@@ -12,7 +12,8 @@
   "dependencies": {
     "ethers": "^6.13.4",
     "express": "^4.21.2",
-    "hardhat": "^2.22.17"
+    "hardhat": "^2.22.17",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0"
