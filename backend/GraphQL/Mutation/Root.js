@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = require('graphql')
-const { handleRegisteration, handleLogin } = require('../../resolvers/register')
+const { handleRegisteration, handleLogin } = require('../../resolvers/register');
+const {handleProductCreation}=require('../../resolvers/product')
 
 const RootMutation = new GraphQLObjectType({
     name: 'RootMutation',
@@ -10,15 +11,18 @@ const RootMutation = new GraphQLObjectType({
                 fields: {
                     message: { type: GraphQLString },
                     status: { type: GraphQLID },
+                    token: {type:GraphQLString},
+                    occurance: {type:GraphQLString}
                 },
             }),
             args: {
                 name: { type: GraphQLString },
-                oid: { type: GraphQLInt },
+                oid: { type: GraphQLString },
                 email: { type: GraphQLString },
-                contact: { type: GraphQLInt },
+                contact: { type: GraphQLString },
                 password: { type: GraphQLString },
-                metamaskID: { type: GraphQLString }
+                metamaskID: { type: GraphQLString },
+                option: {type: GraphQLString}
             },
             resolve: async(_,args)=>{
                 return await handleRegisteration(args);
@@ -30,14 +34,33 @@ const RootMutation = new GraphQLObjectType({
                 fields: {
                     status: { type: GraphQLID },
                     token: { type: GraphQLString },
+                    occurance:{type:GraphQLString}
                 },
             }),
             args: {
+                option: {type: GraphQLString},
                 password: { type: GraphQLString },
                 metamaskID: { type: GraphQLString }
             },
             resolve: async(_,args)=>{
                 return await handleLogin(args);
+            }
+        },
+        AddProduct:{
+            type:new GraphQLObjectType({
+                name:"AddProductResponse",
+                fields:{
+                    status:{type: GraphQLInt},
+                    id: {type: GraphQLInt}
+                }
+            }),
+            args:{
+                name:{type: GraphQLString},
+                creator:{type: GraphQLString},
+                number:{type:GraphQLString}
+            },
+            resolve:async(_,args,context)=>{
+                return await handleProductCreation(args,context);
             }
         }
     }

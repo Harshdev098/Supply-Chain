@@ -326,6 +326,50 @@ nav div ul button:hover{
   cursor: pointer;
 }
 
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1); 
+  padding: 20px;
+  width: 300px; 
+  text-align: center;
+}
+
+.loginBox form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+}
+
+.loginBox input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%; 
+}
+
+.loginBox button {
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  background-color: #0775fb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginBox button:hover {
+  background-color: #0559c8;
+}
 
 /* main styling  */
 .mainNav {
@@ -484,47 +528,106 @@ body {
 }
 
 /* know manufacturer  */
-.knowManuSection{
+.knowManuSection {
   display: flex;
-  margin: 16px;
   flex-direction: column;
-}
-.knowManuSection div{
-  display: flex;
-  justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
-  padding: 10px;
-  margin: 10px;
-}
-@media (max-width:950px) {
-  .videoManufacture video{
-    display: none;
-  }
-  .menuContent{
-    width: 100vw !important;
-    justify-content: center;
-    align-items: center;
-  }
-}
-.menuContent{
-  width: 40vw;
-  display: flex;
-  font-size: 18px;
-  text-wrap: wrap;
-  flex-direction: column;
-}
-.menuContent button{
-  padding: 12px;
-  margin: 10px;
-  background-color: black;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
+  text-align: center;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 1200px;
 }
 
-/* track your product  */
+.knowManuSection h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.knowManuSection div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.menuContent {
+  width: 45%;
+  max-width: 500px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444;
+  text-align: left;
+}
+
+.menuContent p {
+  margin-bottom: 20px;
+}
+
+.menuContent button {
+  padding: 12px 18px;
+  background-color: #000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menuContent button i {
+  transition: transform 0.3s ease;
+}
+
+.menuContent button:hover {
+  background-color: #444;
+}
+
+.menuContent button:hover i {
+  transform: translateX(4px);
+}
+
+.videoManufacture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
+}
+
+.videoManufacture video {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 950px) {
+  .knowManuSection div {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .menuContent {
+    width: 90%;
+    text-align: center;
+  }
+
+  .videoManufacture {
+    width: 100%;
+  }
+
+  .videoManufacture video {
+    display: none; 
+  }
+}
+
+/* track your product component styling */
 .trackProduct{
   display: flex;
   width: 50vw;
@@ -534,22 +637,16 @@ body {
   padding: 20px;
   flex-direction: column;
 }
-.trackProduct div p{
-  font-size: 18px;
+.trackProduct p{
+  font-size: 19px;
   margin: 6px;
 }
-.trackProduct form input{
-  padding: 8px;
-  margin: 6px;
-  font-size: 18px;
-  border: 2px solid black;
-  border-radius: 6px;
-}
-.trackProduct form button{
+.trackProduct button{
   padding: 10px 12px;
   margin: 6px;
   font-size: 18px;
   border: none;
+  cursor: pointer;
   border-radius: 6px;
   background-color: black;
   color: white;
@@ -634,5 +731,413 @@ body {
   }
   .verifyFirst, .verifySecond{
     width: 80vw;
+  }
+}
+
+/* Page header bar  */
+.pageNavbar{
+  height: 40vh;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: linear-gradient(160deg,rgb(1, 63, 134),rgb(4, 99, 154),rgb(0, 128, 255),rgb(0, 153, 255));
+}
+
+.ProductList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ProductList form {
+  display: flex;
+  width: 35%;
+  flex-direction: column;
+  gap: 12px; 
+}
+
+.ProductList form input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.ProductList form input:focus {
+  border-color: rgb(6, 127, 220);
+  outline: none;
+  box-shadow: 0px 0px 5px rgba(6, 127, 220, 0.5);
+}
+
+.ProductList form button {
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, rgb(6, 127, 220), rgb(3, 99, 180));
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.ProductList form button:hover {
+  background: rgb(3, 99, 180);
+  transform: scale(1.05);
+}
+
+.lists {
+  border-top: 2px solid rgb(192, 190, 190);
+  width: 80vw;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lists ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lists ul li {
+  margin: 12px 0;
+  padding: 12px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fdfdfd;
+  transition: all 0.3s ease;
+}
+
+.lists ul li:hover {
+  background: #f1f1f1;
+  transform: scale(1.02);
+}
+
+.lists ul li p {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.lists ul li button {
+  padding: 8px 14px;
+  margin-left: 10px;
+  background: #ff4757;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lists ul li button:hover {
+  background: #e84158;
+  transform: scale(1.05);
+}
+
+
+/* sellconmponent styling  */
+.sellComponent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1200px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sellComponentContent {
+  width: 45%;
+  text-align: left;
+}
+
+.sellComponentContent h3 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.sellComponentContent p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.sellComponentContent a {
+  font-size: 18px;
+  text-decoration: none;
+  color: white;
+  background-color: #000;
+  padding: 12px 18px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sellComponentContent a i {
+  transition: transform 0.3s ease;
+}
+
+.sellComponentContent a:hover {
+  background-color: #444;
+}
+
+.sellComponentContent a:hover i {
+  transform: translateX(4px);
+}
+
+.sellComponent img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 950px) {
+  .sellComponent {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sellComponentContent {
+    width: 90%;
+    text-align: center;
+  }
+
+  .sellComponentContent a {
+    display: inline-block;
+  }
+
+  .sellComponent img {
+    margin-top: 20px;
+    width: 80%;
+    max-width: 350px;
+  }
+}
+
+/* selling page styling  */
+.sellPageContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.sellForm {
+  width: 60vw;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.sellForm form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sellForm form input {
+  width: 90%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.sellForm form button {
+  padding: 10px 16px;
+  margin-top: 12px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+  font-size: 18px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+.sellForm form button:hover {
+  background-color: #333;
+}
+.OutputResult {
+  width: 70vw;
+  background-color: white;
+  border: 1px solid rgb(208, 208, 208);
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .sellForm, .OutputResult {
+    width: 80vw;
+  }
+}
+
+.outputTrack {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  list-style: none;  
+  padding: 0;
+  position: relative;
+}
+
+.outputTrack::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  width: 90%;
+  height: 3px;
+  background-color: rgb(163, 162, 162);  
+  z-index: 0;
+}
+
+.outputTrack ol li {
+  position: relative;
+  z-index: 1; 
+}
+
+.outputTrack ol li::before {
+  content: attr(data-number);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  background-color: rgb(163, 162, 162);
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+}
+
+#content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.track-list {
+  flex: 1; 
+}
+
+.qr-container {
+  flex: 0; 
+  margin: 10px;
+}
+
+.OutputTrackContent{
+  display: flex;
+  flex-direction: column;
+}
+
+#content ul {
+  list-style: none;
+  padding: 15px;
+}
+
+#content ul li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+#content ul li i {
+  font-size: 20px;
+  margin-right: 10px; 
+}
+
+#content ul li p {
+  margin: 0;
+  font-size: 16px;
+}
+
+
+/* product details page styling  */
+.ProductDetails {
+  width: 80vw;
+  margin: auto; 
+  display: flex;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80vh; 
+}
+
+.ProdDetails{
+  display: grid;
+  justify-content: space-around;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(400px,1fr));
+  padding: 10px;
+  margin: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: wrap;
+}
+.ProdDetails h4{
+  font-size: 19px;
+}
+.ProdDetails p{
+  font-size: 18px;
+  padding: 0 8px;
+}
+.ProdDetails button{
+  color: white;
+  background-color: rgb(8, 118, 198);
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 2px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+@media (max-width:1000px) {
+  .ProdDetails{
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   }
 }

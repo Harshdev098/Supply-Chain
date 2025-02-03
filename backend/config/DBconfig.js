@@ -7,15 +7,15 @@ const db=mysql.createPool({
     database:process.env.DB_DATABASE,
     password:process.env.DB_PASSWORD,
     connectionLimit:100,
-    port:3306
+    port:process.env.DB_PORT
 })
 
 const initConnection=async()=>{
     try{
         const connection=await db.getConnection()
-        console.log("database connected")
+        console.log("Database connected")
     }catch(err){
-        console.log("an error occured")
+        console.log("an error occured ",err)
     }
 }
 initConnection()
