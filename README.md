@@ -2,6 +2,14 @@
 
 The project revolutionizes traditional supply chains by leveraging blockchain technology to provide an immutable, tamper-proof record of a product’s journey—from manufacturing to the hands of the end consumer.
 
+![Image](https://github.com/user-attachments/assets/f13eccb7-17a6-42b3-9dfd-eb4587356b68)
+
+![Image](https://github.com/user-attachments/assets/15a08974-1ecc-4cff-8739-c0b338edcfc2)
+
+![Image](https://github.com/user-attachments/assets/15a08974-1ecc-4cff-8739-c0b338edcfc2)
+
+![Image](https://github.com/user-attachments/assets/b99be8af-07cc-4334-b6f1-01dd11f726e1)
+
 ## Key Features & Functionalities
 
 - ✅ Factory & Product Registration – Manufacturers can register their factories and add products to the blockchain.
