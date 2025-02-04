@@ -36,15 +36,15 @@ const showProduct = async (args, context) => {
     console.log("id and creator are ",id,creator)
     try {
         const connection = await db.getConnection()
-        const query = 'select pr.*, manu.metamaskID,manu.name from product as pr inner join Manufacturer as manu ON pr.creator = manu.id where number=? and creator=21'
-        const [result] = await connection.query(query, [id, userid])
+        const query = 'select pr.*, manu.metamaskID,manu.name from product as pr inner join Manufacturer as manu ON pr.creator = manu.id where number=?'
+        const [result] = await connection.query(query, [id])
         console.log("result of showproduct function is ", result)
         const productID = result[0].number
         const date = result[0].creationdate
         const ManuName = result[0].name
         const Pname = result[0].Pname
         const status = 200
-        console.log(productID,date,ManuName,Pname)
+        const creator=result[0].metamaskID
         return { productID, date, ManuName, Pname, creator, status };
     } catch (err) {
         console.log('an error occured ', err)

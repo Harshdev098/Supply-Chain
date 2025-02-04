@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import QrScanner from 'qr-scanner'
 import Navbar from '../Components/Navbar'
 import MetamaskContext from '../Context/metamask'
@@ -9,13 +9,17 @@ import Correct from '../correct.png'
 
 
 export default function Delivery() {
-    const { state } = useContext(MetamaskContext)
+    const { state,handleConnection } = useContext(MetamaskContext)
     const videoRef = useRef()
     const [qrResult, setQrResult] = useState(null)
     const scannerRef = useRef(null);
     const [errorMessage, setErrorMessage] = useState("");
     const [trackstate, setTrackState] = useState([])
     const [details, setDetails] = useState(null)
+
+    useEffect(()=>{
+        handleConnection()
+    },[])
 
     const ScanQR=async()=>{
         if (videoRef.current) {

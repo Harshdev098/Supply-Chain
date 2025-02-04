@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = require('graphql');
 const { showProduct } = require('../../resolvers/product');
+const {fetchtotalParams}=require('../../resolvers/params')
 
 
 const RootQuery = new GraphQLObjectType({
@@ -29,6 +30,23 @@ const RootQuery = new GraphQLObjectType({
             },
             resolve: async (_, args, context) => {
                 return await showProduct(args, context)
+            }
+        },
+        FetchMainData:{
+            type:new GraphQLObjectType({
+                name:"MainDataResponse",
+                fields:{
+                    // compleintID:{type:GraphQLInt},
+                    // projID:{type:GraphQLInt},
+                    // projName:{type:GraphQLString},
+                    // user:{type:GraphQLString},
+                    // statement:{type:GraphQLString}
+                    count:{type:GraphQLInt}
+                }
+            }),
+            resolve:async(_,__,context)=>{
+                const total=await fetchtotalParams(context)
+                return {count:total};
             }
         }
     }

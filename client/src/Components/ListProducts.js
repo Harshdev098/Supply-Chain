@@ -11,8 +11,14 @@ export default function ListProducts() {
     const PNumber = useRef()
     const navigate=useNavigate()
     const {loginCredential}=useContext(LoginContext)
-    const {state} = useContext(MetamaskContext)
+    const {state,handleConnection} = useContext(MetamaskContext)
     const [products, setProducts] = useState([])
+
+    useEffect(()=>{
+        if(!state.contract){
+            handleConnection()
+        }
+    })
 
     const RegisterProduct = async (e) => {
         e.preventDefault()

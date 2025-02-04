@@ -6,6 +6,7 @@ import Login from "./Pages/Login";
 import Verify from "./Components/Verify";
 import { MetamaskProvider } from "./Context/metamask";
 import { LoginProvider } from "./Context/LoginContext";
+import UserEnquiry from "./Components/UserEnquiry";
 import User from "./User";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/main/:id/*" element={<User />} />
             <Route path="/consumer/verify" element={<Verify />} />
+            <Route path='/report/:id' element={<UserEnquiry />} />
           </Routes>
         </BrowserRouter>
       </LoginProvider>

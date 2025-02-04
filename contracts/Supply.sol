@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.28;
+pragma solidity >=0.8.2 <0.9.0;
 
 contract Supply {
     struct Product {
@@ -27,39 +27,41 @@ contract Supply {
     }
 
     function showProducts() public view returns (Product[] memory productList) {
-    uint256 count = 0;
-    for (uint256 i = 0; i < productID.length; i++) {
-        uint256 id = productID[i];
-        if (isOwnerOrInChain(id, msg.sender)) {
-            count++;
+        uint256 count = 0;
+        for (uint256 i = 0; i < productID.length; i++) {
+            uint256 id = productID[i];
+            if (isOwnerOrInChain(id, msg.sender)) {
+                count++;
+            }
         }
-    }
-    Product[] memory result = new Product[](count);
-    uint256 index = 0;
-    for (uint256 i = 0; i < productID.length; i++) {
-        uint256 id = productID[i];
-        if (isOwnerOrInChain(id, msg.sender)) {
-            result[index] = products[id];
-            index++;
+        Product[] memory result = new Product[](count);
+        uint256 index = 0;
+        for (uint256 i = 0; i < productID.length; i++) {
+            uint256 id = productID[i];
+            if (isOwnerOrInChain(id, msg.sender)) {
+                result[index] = products[id];
+                index++;
+            }
         }
+
+        return result;
     }
 
-    return result;
-}
-
-function isOwnerOrInChain(uint256 id, address user) internal view returns (bool) {
-    if (products[id].Manufacturer == user) {
-        return true;
-    }
-    for (uint256 i = 0; i < Link[id].length; i++) {
-        if (Link[id][i].next == user) {
+    function isOwnerOrInChain(
+        uint256 id,
+        address user
+    ) internal view returns (bool) {
+        if (products[id].Manufacturer == user) {
             return true;
         }
+        for (uint256 i = 0; i < Link[id].length; i++) {
+            if (Link[id][i].next == user) {
+                return true;
+            }
+        }
+
+        return false;
     }
-
-    return false;
-}
-
 
     function DeliverNext(uint256 id, address nextAddress) public {
         require(
@@ -70,6 +72,11 @@ function isOwnerOrInChain(uint256 id, address user) internal view returns (bool)
             Link[id][Link[id].length - 1].DelStatus == true,
             "Not delivered"
         );
+        for (uint i = 0; i < Link[id].length; i++) {
+            if (nextAddress == Link[id][i].next) {
+                revert("Already added");
+            }
+        }
         Link[id].push(Next(nextAddress, false));
         emit Addednext(id, nextAddress);
     }
@@ -85,7 +92,7 @@ function isOwnerOrInChain(uint256 id, address user) internal view returns (bool)
             "Delivery already accepted"
         );
         Link[id][lastIndex].DelStatus = true;
-        address prev = Link[id][lastIndex - 1].next; 
+        address prev = Link[id][lastIndex - 1].next;
         address owner = Link[id][0].next; // Manufacturer
         emit Delivered(id, msg.sender, prev, owner);
     }
@@ -103,11 +110,9 @@ function isOwnerOrInChain(uint256 id, address user) internal view returns (bool)
         }
     }
 
-    function ProductDetails(uint256 id)
-        public
-        view
-        returns (Product memory prod)
-    {
+    function ProductDetails(
+        uint256 id
+    ) public view returns (Product memory prod) {
         bool verified;
         for (uint256 i = 0; i < Link[id].length; i++) {
             if (Link[id][i].next == msg.sender) {

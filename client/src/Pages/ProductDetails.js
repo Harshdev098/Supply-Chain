@@ -8,8 +8,12 @@ export default function ProductDetails() {
     const location = useLocation()
     const path = location.pathname.split('/')
     const pathElement = path[path.length - 1]
-    const { state } = useContext(MetamaskContext)
+    const { state,handleConnection } = useContext(MetamaskContext)
     const [details, setDetails] = useState(null)
+
+    useEffect(()=>{
+        handleConnection()
+    },[])
 
     useEffect(() => {
         const fetchDetails = async () => {

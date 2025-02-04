@@ -1,23 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import KnowManufacturer from '../Components/KnowManufacturer';
 import Sell from '../Components/Sell';
 import LoginContext from '../Context/LoginContext';
+import { handleFetchData } from '../handlers/MainData';
+import MetamaskContext from '../Context/metamask';
 
 export default function Main() {
+  const [paramsData,setParamsData]=useState()
+  const {state,handleConnection}=useContext(MetamaskContext)
   const navigate=useNavigate()
   const {loginCredential}=useContext(LoginContext)
+  let listorAccept=document.getElementById('listorAccept')
+  if((localStorage.getItem('UserId')).split("_")[0]!=='Manufacturer'){
+    listorAccept.textContent('Accept Delivery')
+  }
   const navigation=()=>{
-    let listorAccept=document.getElementById('listorAccept')
     if((localStorage.getItem('UserId')).split("_")[0]==='Manufacturer'){
       navigate(`/main/${loginCredential.id ? loginCredential.id : localStorage.getItem('UserId')}/product/list`)
     }
     else{
       navigate(`/main/${loginCredential.id ? loginCredential.id : localStorage.getItem('UserId')}/acceptDelivery`)
-      // listorAccept.textContent('Accept Delivery')
     }
   }
+
+  useEffect(()=>{
+    const Fetchdata=async()=>{
+      const ParamData=await handleFetchData()
+      setParamsData(ParamData)
+    }
+    handleConnection()
+    Fetchdata()
+  },[])
+
   return (
     <>
       <Navbar />
@@ -57,7 +73,7 @@ export default function Main() {
           <div className="statBoxes">
             <div className="statBox">
               <h3>Complaints</h3>
-              <p>234</p>
+              <p>{paramsData}</p>
             </div>
             <div className="statBox">
               <h3>Products</h3>

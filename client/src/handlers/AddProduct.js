@@ -1,12 +1,10 @@
 export const AddProduct = async (name, number, state) => {
     console.log("state: ", state)
-    const creator = state.account ? state.account : (JSON.parse(localStorage.getItem("metamaskData"))).account
-    const contract = state.contract ? state.contract : (JSON.parse(localStorage.getItem("metamaskData"))).contract
     try {
         const query = {
             query: `
                     mutation{
-                        AddProduct(name:"${name}",creator:"${creator}",number:"${number}"){
+                        AddProduct(name:"${name}",creator:"${state.account}",number:"${number}"){
                             id
                             status
                         }
@@ -27,7 +25,7 @@ export const AddProduct = async (name, number, state) => {
         console.log("result", result)
         if (response.ok && result.data.AddProduct.status === 200) {
             const offchainData = result.data.AddProduct.id
-            const OnchainResult = await contract.addProduct(number, name)
+            const OnchainResult = await state.contract.addProduct(number, name)
             console.log("result from blockchain", OnchainResult)
             alert(`product added ${offchainData}`)
             return
@@ -38,14 +36,13 @@ export const AddProduct = async (name, number, state) => {
         }
     } catch (err) {
         console.log("an error occured while adding project", err)
+        alert("Internal server error occured")
     }
 }
 
 export const showProduct = async (state) => {
     try {
-        console.log("the state in showProduct function is ", state)
-        const contract = state.contract ? state.contract : (JSON.parse(localStorage.getItem("metamaskData"))).contract
-        const projectList = await contract.showProducts()
+        const projectList = await state.contract.showProducts()
         console.log("project list is ", projectList)
         const structuredProducts = projectList.map((prod) => ({
             id: prod[0].toString(),
@@ -55,14 +52,13 @@ export const showProduct = async (state) => {
         return structuredProducts;
     } catch (err) {
         console.log("an error occured while showing the products ", err)
+        alert("Internal server occured")
     }
 }
 
 export const handleSellProduct = async (number, buyerAddress, state) => {
     try {
-        const contract = state.contract ? state.contract : (JSON.parse(localStorage.getItem("metamaskData"))).contract
-        console.log("contract in handleSellProduct is ", contract)
-        const result = await contract.DeliverNext(number, buyerAddress)
+        const result = await state.contract.DeliverNext(number, buyerAddress)
         console.log("result of handlesellproduct is ", result)
         alert("A new supplier has been added in the chain. Product selled!")
     }catch(err){
@@ -72,12 +68,11 @@ export const handleSellProduct = async (number, buyerAddress, state) => {
 }
 
 export const handleFetchDetails = async (state, number) => {
-    const creator = state.account
     console.log("number and state ", number, state)
     const grpqhQuery = {
         query: `
             query{
-                ProductDetails(id:${number},creator:"${creator}"){
+                ProductDetails(id:${number},creator:"${state.account}"){
                     productID,date,ManuName,Pname,creator,status
                 }
             }
@@ -96,6 +91,7 @@ export const handleFetchDetails = async (state, number) => {
         const result = response && await response.json()
         if (result.data.ProductDetails.status === 200) {
             const details = result.data.ProductDetails
+            console.log("details are ",result.data.ProductDetails)
             return details;
         }
         else {

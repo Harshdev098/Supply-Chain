@@ -19,13 +19,17 @@ export default function SellProducts() {
 	const buyerAddress = useRef()
 
 	const [trackstate, setTrackState] = useState([])
-	const { state } = useContext(MetamaskContext)
+	const { state,handleConnection } = useContext(MetamaskContext)
 	const videoRef = useRef()
 	const [qrResult, setQrResult] = useState(null)
 	const scannerRef = useRef(null);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [details, setDetails] = useState(null)
 	const [productID, setProductID] = useState(null)
+
+	useEffect(()=>{
+		handleConnection()
+	},[])
 
 	const sellProduct = async (e) => {
 		e.preventDefault()
@@ -84,6 +88,27 @@ export default function SellProducts() {
 		};
 	}, []);
 
+	const downloadQRCode = () => {
+		const svg = document.querySelector(".qr-container svg"); // Select the QR code SVG
+		const canvas = document.createElement("canvas");
+		const ctx = canvas.getContext("2d");
+		const serializer = new XMLSerializer();
+		const svgString = serializer.serializeToString(svg);
+		const img = new Image();
+
+		img.onload = () => {
+			canvas.width = img.width;
+			canvas.height = img.height;
+			ctx.drawImage(img, 0, 0);
+			const link = document.createElement("a");
+			link.href = canvas.toDataURL("image/png");
+			link.download = `QRCode_${productID || "default"}.png`;
+			link.click();
+		};
+
+		img.src = "data:image/svg+xml;base64," + btoa(svgString);
+	};
+
 
 	return (
 		<>
@@ -111,6 +136,9 @@ export default function SellProducts() {
 				</div>
 				{
 					trackstate && details ? <div className='OutputResult'>
+						<div style={{ float: 'right' }}>
+							<button style={{ backgroundColor: 'black', color: 'white', fontSize: '18px', padding: '8px', margin: '8px' }}>Print Section</button>
+						</div>
 						<div className='OutputTrackContent'>
 							<ol className='outputTrack'>
 								<li></li>
@@ -138,31 +166,35 @@ export default function SellProducts() {
 								</div>
 								<div className="qr-container">
 									<QRCode size={100} bgColor='white' fgColor='black' value={`${productID}`} />
+									<button onClick={downloadQRCode} style={{ marginTop: "10px", padding: "8px", fontSize: "14px", cursor: "pointer" }}>
+										Download QR Code
+									</button>
 								</div>
+
 							</div>
 
 						</div>
 						{details ? <div className='ProdDetails'>
 							<div>
-                                <h4>Product Name:</h4>
-                                <p>{details.Pname}</p>
-                            </div>
-                            <div>
-                                <h4>Product ID:</h4>
-                                <p>{details.productID}</p>
-                            </div>
-                            <div>
-                                <h4>Manufacturer Name:</h4>
-                                <p>{details.ManuName}</p>
-                            </div>
-                            <div>
-                                <h4>Manufacturer Address:</h4>
-                                <p>{details.creator}</p>
-                            </div>
-                            <div>
-                                <h4>Creation Date:</h4>
-                                <p>{details.date}</p>
-                            </div>
+								<h4>Product Name:</h4>
+								<p>{details.Pname}</p>
+							</div>
+							<div>
+								<h4>Product ID:</h4>
+								<p>{details.productID}</p>
+							</div>
+							<div>
+								<h4>Manufacturer Name:</h4>
+								<p>{details.ManuName}</p>
+							</div>
+							<div>
+								<h4>Manufacturer Address:</h4>
+								<p>{details.creator}</p>
+							</div>
+							<div>
+								<h4>Creation Date:</h4>
+								<p>{details.date}</p>
+							</div>
 						</div> : "An error occured"}
 					</div> :
 						<div className='OutputResult' style={{ height: "400px" }}></div>
